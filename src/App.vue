@@ -1,60 +1,227 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <div class="app-content">
+      <div class="todobox">
+        <todolists v-bind:todos='todos'></todolists>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import Todolists from './Todolists.vue';
+
 export default {
   name: 'app',
-  data () {
+  components: {
+    'todolists': Todolists
+  },
+  data: function() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      todoTitle: "Here are your lists",
+      // item: {title},
+      todoName: "",
+      todos: [],
+      todolist: null,
+      todoListId: 0,
+      todoItem: {name:"", },
+      todoItems: [],
+      activeTodo: 0
+    }
+  },
+  created: function() {
+    // let ajaxUrlLocal = 'http://localhost:3000/api/todos/todos/1/items';
+    let ajaxUrlLocal = 'http://localhost:3000/api/todos/todos/';
+    var _this = this;
+    $.ajax({
+      type: "GET",
+      url: ajaxUrlLocal,
+      success: function(data){
+      },
+      error: function(jqXHR){
+        console.log("error");
+      }
+    })
+    .then(function(data) {
+      if(data.length) {
+        _this.todos = data;
+      } else {
+        _this.todos = [data];
+      }
+      console.log('in created: '+_this.todos);
+      _this.todos.map(function(todolist) {
+        // console.log('activeTodo' + activeTodo);
+        todolist.isActive = false;
+        // if(todolist.id === _this.activeTodo) {
+        //   todolist.isActive = true;
+        // } else {
+        //   todolist.isActive = false;
+        // };
+        todolist.all_items.map(function(item) {
+          item.isActive = false;
+        });
+      });
+    });
+  },
+  methods: {
+    activateTodolistA: function(todolist) {
+      console.log("OK" + this.todos);
+      // this.todos.map(function(todolist) {todolist.isActive = false});
+      //   this.todolist.isActive = true;
+
+      // todolist.isActive = !todolist.isActive;
+      // var index = this.todos.indexOf(todolist);
+      // this.todos.splice(index, 1);
+      // this.todos.map(function(todolist){todolist.isActive = false});
+      // this.todos.splice(index, 0, todolist);
+
+      // if(todolist.isActive) {this.activeTodo = todolist.id};
+    },
+    addTodo: function() {
+      this.todos.push({id: Date.now(), name: this.todoName});
+      this.todoName = null;
     }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
+body {
+  margin: 0;
   padding: 0;
+  font-family: sans-serif;
 }
-
 li {
-  display: inline-block;
-  margin: 0 10px;
+  cursor: pointer;
+  list-style: none;
+}
+.App {
+  text-align: center;
 }
 
-a {
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.small-box {
+  width: 400px;
+  /*border-style: solid;*/
+}
+.App-content {
+ /* border-color: red;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 2px;
+  height: 600px;*/
+}
+.todobox {
+  /*border-color: black;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 2px;*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.TodoTitle {
+  /*text-decoration: bold;*/
+}
+.todolists {
+  text-align: left;
+}
+.active {
+  background-color: rgba(0,255,0,0.2);
+}
+.itemBox {
+  width: 300px;
+  /*border-bottom: solid;
+  border-width: 1px;
+  border-color: grey;*/
+  display: flex;
+  direction: row;
+  justify-content: space-between;
+}
+/************************************************************/
+/*MODAL*/
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 300px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  transition: all .3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+  margin-top: 0;
   color: #42b983;
 }
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
 </style>

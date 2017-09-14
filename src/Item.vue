@@ -17,11 +17,13 @@
           </button>
         </p>
       </modal>
+
     </h3>
   </span>
 </template>
 
 <script>
+  import Modal from './Modal.vue';
 
   export default {
     name: 'item',
@@ -29,7 +31,9 @@
       return {showModal: false}
     },
     props: ['todoItem'],
-    template:'',
+    components: {
+      'modal': Modal
+    },
     methods: {
       activateTodoItem: function() {
         this.$emit('activateItem');

@@ -2,7 +2,7 @@
   <span>
     <form>
       <input type="text" title="itemName" placeholder="item name" v-model="itemName">
-      <button v-on:click="saveEditItem" v-bind:disabled="nameTooShort">Modifier</button>
+      <button v-on:click.prevent="saveEditItem" v-bind:disabled="nameTooShort">Modifier</button>
       {{this.tooShortAlert}}
     </form>
   </span>
@@ -23,9 +23,9 @@
         return false;
       }
     },
-    template:'',
     methods: {
       saveEditItem: function() {
+        this.todoItem.name = this.itemName;
         this.$emit('saveItem');
       }
     },
