@@ -1,7 +1,7 @@
 <template>
   <ul v-on:activateTodolist="activationOfTodolist"> <!-- list of todos -->
     <div v-for="todolist in todos" >
-      <todolist v-bind:todolist="todolist" :isActive="todolist.isActive" v-bind:class="{active: todolist.isActive}" ></todolist>
+      <todolist v-bind:todolist="todolist" :isActive="todolist.isActive" v-bind:class="{active: todolist.isActive}" class="todolist-box"></todolist>
 
     </div>
   </ul>
@@ -23,3 +23,12 @@
     }
   }
 </script>
+
+<style>
+  .todolist-box {
+    border: 2px solid grey;
+    border-radius: 4px;
+    margin: 4px;
+    padding: 4px;
+  }
+</style>

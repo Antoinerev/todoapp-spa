@@ -1,6 +1,6 @@
 <template>
   <li>
-    <h2 v-on:click.prevent="activateTodolist">{{todoTitleUpCased}} - {{this.todolist.isActive}} </h2>
+    <h2 v-on:click.prevent="activateTodolist">{{todoTitleUpCased}}</h2>
     <todo-items v-bind:todolist="todolist"></todo-items>
     <form v-if="isActive" v-on:submit.prevent="addItem(todolist)" >
       <label>
@@ -80,4 +80,13 @@
   }
 </script>
 
-<style></style>
+<style scoped>
+  li {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  h2 {
+    align-self: center;
+  }
+</style>
