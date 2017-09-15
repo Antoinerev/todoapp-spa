@@ -9,6 +9,8 @@
         <input type="text" title="itemName" placeholder="item name" v-model="newTodoItem.name">
       <button type="submit" v-bind:disabled="fieldEmpty">Ajouter</button>
     </form>
+    <hr>
+    <router-link to='/'>retour</router-link>
   </div>
 </template>
 

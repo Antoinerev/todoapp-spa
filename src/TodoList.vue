@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h2 v-on:click.prevent="activateTodolist">{{todolist.id}}/ {{todoTitleUpCased}}</h2>
+
+      <h2 v-on:click.prevent="activateTodolist"> <router-link v-bind:to="`/todolists/${todolist.id}`">{{todolist.id}}/ {{todoTitleUpCased}}</router-link></h2>
+
     <todo-items v-bind:todolist="todolist"></todo-items>
     <form v-if="isActive" v-on:submit.prevent="addItem(todolist)" >
       <label>
@@ -81,6 +83,13 @@
 </script>
 
 <style scoped>
+  a:link {
+    text-decoration: none;
+    color: grey;
+  }
+  a:visited {
+    color: grey;
+  }
   li {
     display: flex;
     flex-direction: column;
