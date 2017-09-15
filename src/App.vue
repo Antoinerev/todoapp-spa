@@ -2,7 +2,8 @@
   <div id="app">
     <div class="app-content">
       <div class="todobox">
-        <todolists v-bind:todos='todos'></todolists>
+        <!-- <todolists v-bind:todos='todos'></todolists> -->
+        <router-view v-bind:todos='todos'></router-view>
       </div>
     </div>
   </div>

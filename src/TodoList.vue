@@ -1,6 +1,6 @@
 <template>
-  <li>
-    <h2 v-on:click.prevent="activateTodolist">{{todoTitleUpCased}}</h2>
+  <div>
+    <h2 v-on:click.prevent="activateTodolist">{{todolist.id}}/ {{todoTitleUpCased}}</h2>
     <todo-items v-bind:todolist="todolist"></todo-items>
     <form v-if="isActive" v-on:submit.prevent="addItem(todolist)" >
       <label>
@@ -9,7 +9,7 @@
         <input type="text" title="itemName" placeholder="item name" v-model="newTodoItem.name">
       <button type="submit" v-bind:disabled="fieldEmpty">Ajouter</button>
     </form>
-  </li>
+  </div>
 </template>
 
 <script>

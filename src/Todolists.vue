@@ -1,8 +1,9 @@
 <template>
   <ul v-on:activateTodolist="activationOfTodolist"> <!-- list of todos -->
     <div v-for="todolist in todos" >
-      <todolist v-bind:todolist="todolist" :isActive="todolist.isActive" v-bind:class="{active: todolist.isActive}" class="todolist-box"></todolist>
-
+      <li>
+        <todolist v-bind:todolist="todolist" :isActive="todolist.isActive" v-bind:class="{active: todolist.isActive}" class="todolist-box"></todolist>
+      </li>
     </div>
   </ul>
 </template>
