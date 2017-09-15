@@ -43,10 +43,7 @@
         $.ajax({
           type: "PATCH",
           url: ajaxEditUrl,
-          data: todoItem,
-          success: function(data) {
-            // console.log(data);
-          }
+          data: todoItem
         });
       },
       deleteItemInTodo: function(todoItem) {
@@ -55,10 +52,7 @@
         this.todolist.all_items = this.todolist.all_items.filter(function(item) { return item.id !== todoItem.id});
         $.ajax({
           type: "DELETE",
-          url: ajaxDeleteUrl,
-          // data: todoItem,
-          success: function(data) {
-          }
+          url: ajaxDeleteUrl
         });
       }
     }

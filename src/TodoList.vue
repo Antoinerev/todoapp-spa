@@ -50,29 +50,30 @@
         this.$parent.todos.map(function(todolist){todolist.isActive = false});
         this.$parent.todos.splice(index, 0, todolist);
 
-        if(todolist.isActive) {this.$parent.activeTodo = todolist.id};
+        // if(todolist.isActive) {this.$parent.activeTodo = todolist.id};
       },
       addItem: function(todolist) {
         let ajaxNewUrl = "http://localhost:3000/api/todos/todos/"+todolist.id+"/items/";
-        // let _this = this;
-        let ajaxNewTodoItem = this.newTodoItem;
-        console.log('this: '+this.newTodoItem);
-        $.ajax({
-          type: "POST",
-          url: ajaxNewUrl,
-          data: ajaxNewTodoItem,
-          success: function(data){
-            // console.log(data.length);
-          },
-          error: function(jqXHR){
-            console.log("error");
-          }
-        })
-        .then(function(response) {
-          // var lastIndex = response.all_items.length -1;
-          // var newItem = response.all_items[lastIndex];
-          todolist.all_items = response.all_items;
-        });
+
+        $.post(ajaxNewUrl, this.newTodoItem)
+          .then((response) => {
+            todolist.all_items = response.all_items;
+          });
+
+        // let ajaxNewTodoItem = this.newTodoItem;
+        // $.ajax({
+        //   type: "POST",
+        //   url: ajaxNewUrl,
+        //   data: ajaxNewTodoItem,
+        //   success: function(data){
+        //   },
+        //   error: function(jqXHR){
+        //     console.log("error");
+        //   }
+        // })
+        // .then(function(response) {
+        //   todolist.all_items = response.all_items;
+        // });
         this.newTodoItem.name = "";
       }
     }

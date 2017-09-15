@@ -22,61 +22,57 @@ export default {
       // item: {title},
       todoName: "",
       todos: [],
-      todolist: null,
-      todoListId: 0,
-      todoItem: {name:"", },
-      todoItems: [],
-      activeTodo: 0
+      // todolist: null,
+      // todoListId: 0,
+      // todoItem: {name:"", },
+      // todoItems: [],
+      // activeTodo: 0
     }
   },
   created: function() {
     // let ajaxUrlLocal = 'http://localhost:3000/api/todos/todos/1/items';
     let ajaxUrlLocal = 'http://localhost:3000/api/todos/todos/';
-    var _this = this;
-    $.ajax({
-      type: "GET",
-      url: ajaxUrlLocal,
-      success: function(data){
-      },
-      error: function(jqXHR){
-        console.log("error");
-      }
-    })
-    .then(function(data) {
+    // var _this = this;
+    $.get(ajaxUrlLocal)
+    .then((data) => {
       if(data.length) {
-        _this.todos = data;
+        this.todos = data;
       } else {
-        _this.todos = [data];
+        this.todos = [data];
       }
-      console.log('in created: '+_this.todos);
-      _this.todos.map(function(todolist) {
-        // console.log('activeTodo' + activeTodo);
+      // console.log('in created: '+_this.todos);
+      this.todos.map(function(todolist) {
         todolist.isActive = false;
-        // if(todolist.id === _this.activeTodo) {
-        //   todolist.isActive = true;
-        // } else {
-        //   todolist.isActive = false;
-        // };
         todolist.all_items.map(function(item) {
           item.isActive = false;
         });
       });
     });
+    // $.ajax({
+    //   type: "GET",
+    //   url: ajaxUrlLocal,
+    //   success: function(data){
+    //   },
+    //   error: function(jqXHR){
+    //     console.log("error");
+    //   }
+    // })
+    // .then(function(data) {
+    //   if(data.length) {
+    //     _this.todos = data;
+    //   } else {
+    //     _this.todos = [data];
+    //   }
+    //   // console.log('in created: '+_this.todos);
+    //   _this.todos.map(function(todolist) {
+    //     todolist.isActive = false;
+    //     todolist.all_items.map(function(item) {
+    //       item.isActive = false;
+    //     });
+    //   });
+    // });
   },
   methods: {
-    activateTodolistA: function(todolist) {
-      console.log("OK" + this.todos);
-      // this.todos.map(function(todolist) {todolist.isActive = false});
-      //   this.todolist.isActive = true;
-
-      // todolist.isActive = !todolist.isActive;
-      // var index = this.todos.indexOf(todolist);
-      // this.todos.splice(index, 1);
-      // this.todos.map(function(todolist){todolist.isActive = false});
-      // this.todos.splice(index, 0, todolist);
-
-      // if(todolist.isActive) {this.activeTodo = todolist.id};
-    },
     addTodo: function() {
       this.todos.push({id: Date.now(), name: this.todoName});
       this.todoName = null;
