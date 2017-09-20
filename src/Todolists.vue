@@ -2,7 +2,7 @@
   <ul v-on:activateTodolist="activationOfTodolist"> <!-- list of todos -->
     <div v-for="todolist in todos" >
       <li>
-        <todolist v-bind:todolist="todolist" :isActive="todolist.isActive" v-bind:class="{active: todolist.isActive}" class="todolist-box"></todolist>
+        <todolist v-bind:todolist="todolist" class="todolist-box"></todolist>
       </li>
     </div>
   </ul>
